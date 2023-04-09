@@ -1,6 +1,9 @@
 name: Create and publish a Docker image
 
 on:
+ pull_request:
+   branches:
+   - main
  push:
    branches:
    - main
@@ -42,3 +45,5 @@ jobs:
        push: true
        tags: ${{ steps.meta.outputs.tags }}
        labels: ${{ steps.meta.outputs.labels }}
+       cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache
+       cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache,mode=max
